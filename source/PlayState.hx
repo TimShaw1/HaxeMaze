@@ -61,7 +61,7 @@ class PlayState extends FlxState
 		var coords = tileMap.getTileCoords(0);
 		var index = rand.int(coords.length);
 		var startPos:FlxPoint;
-		startPos = new FlxPoint(coords[index].x + 2, coords[index].y + 2);
+		startPos = new FlxPoint(coords[index].x + 4, coords[index].y + 4);
 
 		// set sprite start position
 		spr.setPosition(startPos.x - Math.round((FlxG.width / MAZE_DIM) / 2), startPos.y - Math.round((FlxG.height / MAZE_DIM) / 2));
