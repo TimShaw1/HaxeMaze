@@ -18,7 +18,6 @@ class PlayState extends FlxState
 {
 	var text:FlxText;
 	var game_maze:Array<Array<Int>>;
-	var boxes:FlxTypedGroup<FlxSprite>;
 	var MAZE_DIM:Int = 16;
 
 	var tileMap:FlxTilemap;
@@ -29,20 +28,21 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		add(boxes = new FlxTypedGroup<FlxSprite>());
 		super.create();
 
+		// Draggable box
 		spr = new FlxExtendedSprite(0, 0,
 			FlxGraphic.fromRectangle(Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2), FlxColor.BLUE));
 		spr.allowCollisions = ANY;
 
+		// Generate maze
 		var rand = new Random();
 		game_maze = DepthFirst.make(MAZE_DIM, MAZE_DIM, Std.string(rand.int));
-		tileMap = new FlxTilemap();
-		var redRect = FlxGraphic.fromRectangle(Math.round(FlxG.width / MAZE_DIM), Math.round(FlxG.height / MAZE_DIM) * 4, FlxColor.GRAY);
 
-		var startPos:FlxPoint;
+		// Generate tile texture
+		var grayRect = FlxGraphic.fromRectangle(Math.round(FlxG.width / MAZE_DIM), Math.round(FlxG.height / MAZE_DIM) * 4, FlxColor.GRAY);
 
+		// Fixes tiles not rendering
 		for (i in 0...game_maze.length)
 		{
 			for (j in 0...game_maze.length)
@@ -52,16 +52,22 @@ class PlayState extends FlxState
 			}
 		}
 
-		tileMap.loadMapFrom2DArray(game_maze, redRect, Math.round(FlxG.width / MAZE_DIM), Math.round(FlxG.height / MAZE_DIM));
+		// Generate the tile map
+		tileMap = new FlxTilemap();
+		tileMap.loadMapFrom2DArray(game_maze, grayRect, Math.round(FlxG.width / MAZE_DIM), Math.round(FlxG.height / MAZE_DIM));
 		tileMap.screenCenter();
 
+		// Get random valid starting position
 		var coords = tileMap.getTileCoords(0);
 		var index = rand.int(coords.length);
+		var startPos:FlxPoint;
 		startPos = new FlxPoint(coords[index].x + 2, coords[index].y + 2);
 
+		// set sprite start position
 		spr.setPosition(startPos.x - Math.round((FlxG.width / MAZE_DIM) / 2), startPos.y - Math.round((FlxG.height / MAZE_DIM) / 2));
 		spr.updateHitbox();
 
+		// Game over text
 		text = new FlxText(0, 0, FlxG.width, "You Lose", 64);
 		text.setFormat(null, 64, FlxColor.RED, FlxTextAlign.CENTER);
 		text.screenCenter();
@@ -85,6 +91,7 @@ class PlayState extends FlxState
 			}
 		}
 
+		// Stop dragging
 		if (FlxG.mouse.released)
 			pressedFlag = false;
 
@@ -113,6 +120,7 @@ class PlayState extends FlxState
 			}
 		}
 
+		// Drag properly
 		if (pressedFlag)
 		{
 			spr.x = FlxG.mouse.x - spr.width / 2;
