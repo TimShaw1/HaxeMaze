@@ -109,8 +109,10 @@ class PlayState extends FlxState
 
 		for (coord in coords)
 		{
+			// Garbage collector SEETHING rn
 			rect = new FlxRect(coord.x, coord.y, Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2));
 
+			// See if any of our sprite's corners are on a wall
 			if (rect.overlaps(sprRectTL) || rect.overlaps(sprRectTR) || rect.overlaps(sprRectBL) || rect.overlaps(sprRectBR))
 			{
 				pressedFlag = false;
