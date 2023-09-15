@@ -22,6 +22,7 @@ class PlayState extends FlxState
 	var tileMap:FlxTilemap;
 
 	var spr:FlxSprite;
+	var sprRect:FlxRect;
 
 	var pressedFlag:Bool;
 
@@ -65,6 +66,9 @@ class PlayState extends FlxState
 		spr.setPosition(startPos.x - Math.round((FlxG.width / MAZE_DIM) / 2), startPos.y - Math.round((FlxG.height / MAZE_DIM) / 2));
 		spr.updateHitbox();
 
+		sprRect = new FlxRect(spr.getMidpoint().x - Math.round(spr.width / 2), spr.getMidpoint().y - Math.round(spr.height / 2), spr.width * 2,
+			spr.height * 2); // no idea why I need to multiply w and h by 2
+
 		// Game over text
 		text = new FlxText(0, 0, FlxG.width, "You Lose", 64);
 		text.setFormat(null, 64, FlxColor.RED, FlxTextAlign.CENTER);
@@ -96,9 +100,8 @@ class PlayState extends FlxState
 		// Custom collision - hitboxes were being weird
 		var coords = tileMap.getTileCoords(2);
 		var rect:FlxRect = new FlxRect(0, 0, Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2));
-
-		var sprRect = new FlxRect(spr.getMidpoint().x - Math.round(spr.width / 2), spr.getMidpoint().y - Math.round(spr.height / 2), spr.width * 2,
-			spr.height * 2); // no idea why I need to multiply w and h by 2
+		sprRect.x = spr.getMidpoint().x - Math.round(spr.width / 2);
+		sprRect.y = spr.getMidpoint().y - Math.round(spr.height / 2);
 
 		for (coord in coords)
 		{
