@@ -98,7 +98,7 @@ class PlayState extends FlxState
 		var rect:FlxRect = new FlxRect(0, 0, Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2));
 
 		var sprRect = new FlxRect(spr.getMidpoint().x - Math.round(spr.width / 2), spr.getMidpoint().y - Math.round(spr.height / 2), spr.width * 2,
-			spr.height * 2);
+			spr.height * 2); // no idea why I need to multiply w and h by 2
 
 		for (coord in coords)
 		{
@@ -106,7 +106,7 @@ class PlayState extends FlxState
 			rect.x = coord.x;
 			rect.y = coord.y;
 
-			// See if any of our sprite's corners are on a wall
+			// See if the current wall overlaps (collides) with the player
 			if (rect.overlaps(sprRect))
 			{
 				pressedFlag = false;
