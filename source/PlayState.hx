@@ -97,7 +97,7 @@ class PlayState extends FlxState
 
 		// Custom collision
 		var coords = tileMap.getTileCoords(2);
-		var rect:FlxRect;
+		var rect:FlxRect = new FlxRect(0, 0, Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2));
 
 		var sprRectTL = new FlxRect(spr.getMidpoint().x - Math.round(spr.width / 2), spr.getMidpoint().y - Math.round(spr.height / 2), spr.width, spr.height);
 
@@ -109,8 +109,9 @@ class PlayState extends FlxState
 
 		for (coord in coords)
 		{
-			// Garbage collector SEETHING rn
-			rect = new FlxRect(coord.x, coord.y, Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2));
+			// Garbage collector is now happy
+			rect.x = coord.x;
+			rect.y = coord.y;
 
 			// See if any of our sprite's corners are on a wall
 			if (rect.overlaps(sprRectTL) || rect.overlaps(sprRectTR) || rect.overlaps(sprRectBL) || rect.overlaps(sprRectBR))
