@@ -3,7 +3,6 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxExtendedSprite;
 import flixel.graphics.FlxGraphic;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
@@ -22,7 +21,7 @@ class PlayState extends FlxState
 
 	var tileMap:FlxTilemap;
 
-	var spr:FlxExtendedSprite;
+	var spr:FlxSprite;
 
 	var pressedFlag:Bool;
 
@@ -31,8 +30,7 @@ class PlayState extends FlxState
 		super.create();
 
 		// Draggable box
-		spr = new FlxExtendedSprite(0, 0,
-			FlxGraphic.fromRectangle(Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2), FlxColor.BLUE));
+		spr = new FlxSprite(0, 0, FlxGraphic.fromRectangle(Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2), FlxColor.BLUE));
 		spr.allowCollisions = ANY;
 
 		// Generate maze
