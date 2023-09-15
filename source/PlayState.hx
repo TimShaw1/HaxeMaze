@@ -93,17 +93,12 @@ class PlayState extends FlxState
 		if (FlxG.mouse.released)
 			pressedFlag = false;
 
-		// Custom collision - overlap is not working correctly (only detects top-left corner of hitbox)
+		// Custom collision - hitboxes were being weird
 		var coords = tileMap.getTileCoords(2);
 		var rect:FlxRect = new FlxRect(0, 0, Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2));
 
-		var sprRectTL = new FlxRect(spr.getMidpoint().x - Math.round(spr.width / 2), spr.getMidpoint().y - Math.round(spr.height / 2), spr.width, spr.height);
-
-		var sprRectTR = new FlxRect(spr.getMidpoint().x + Math.round(spr.width / 2), spr.getMidpoint().y - Math.round(spr.height / 2), spr.width, spr.height);
-
-		var sprRectBL = new FlxRect(spr.getMidpoint().x - Math.round(spr.width / 2), spr.getMidpoint().y + Math.round(spr.height / 2), spr.width, spr.height);
-
-		var sprRectBR = new FlxRect(spr.getMidpoint().x + Math.round(spr.width / 2), spr.getMidpoint().y + Math.round(spr.height / 2), spr.width, spr.height);
+		var sprRect = new FlxRect(spr.getMidpoint().x - Math.round(spr.width / 2), spr.getMidpoint().y - Math.round(spr.height / 2), spr.width * 2,
+			spr.height * 2);
 
 		for (coord in coords)
 		{
@@ -112,7 +107,7 @@ class PlayState extends FlxState
 			rect.y = coord.y;
 
 			// See if any of our sprite's corners are on a wall
-			if (rect.overlaps(sprRectTL) || rect.overlaps(sprRectTR) || rect.overlaps(sprRectBL) || rect.overlaps(sprRectBR))
+			if (rect.overlaps(sprRect))
 			{
 				pressedFlag = false;
 				text.visible = true;
