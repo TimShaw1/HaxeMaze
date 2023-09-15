@@ -93,7 +93,7 @@ class PlayState extends FlxState
 		if (FlxG.mouse.released)
 			pressedFlag = false;
 
-		// Custom collision
+		// Custom collision - overlap is not working correctly (only detects top-left corner of hitbox)
 		var coords = tileMap.getTileCoords(2);
 		var rect:FlxRect = new FlxRect(0, 0, Math.round((FlxG.width / MAZE_DIM) / 2), Math.round((FlxG.height / MAZE_DIM) / 2));
 
